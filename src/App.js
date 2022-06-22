@@ -30,9 +30,11 @@ const App = () => {
         // check tie or not
 
         if (clickCount === 9 && winner === "") {
-          setIsTie(true);
-          setIsCross("");
-          setWonLine("");
+          setTimeout(() => {
+            setIsTie(true);
+            setIsCross("");
+            setWonLine("");
+          }, 1000);
         } else {
           setIsCross(!isCross);
         }

@@ -315,6 +315,9 @@ body {
 /* Responsive  --  360 */
 
 @media only screen and (max-width: 550px) {
+  body {
+    height: fit-content;
+  }
   .icon {
     font-size: 33px;
   }
