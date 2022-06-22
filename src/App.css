@@ -1,38 +1,595 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+:root {
+  --icons: 60px;
+  --fontIcon: 40px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+      -90deg,
+      rgba(41, 50, 60, 1) 0%,
+      rgba(72, 85, 99, 1) 100%
+    )
+    no-repeat;
+  background-size: cover;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.space-between {
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+}
+.flex {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+}
+.header {
+  width: 100%;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.15);
+}
+.section {
+  position: relative;
+  width: 200px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #f29d38; */
 }
 
-.App-link {
-  color: #61dafb;
+.section.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 205px;
+  height: 2px;
+  border-radius: 3px;
+  background: #607d8b;
+  animation: turn-In 0.5s;
+}
+.icon {
+  color: #f29d38;
+  font-size: 40px;
+}
+.dash {
+  color: #f5f5f5;
+  font-size: 40px;
+}
+.section span {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  color: #f5f5f5;
+  transition: 0.5s;
+}
+.divider-line {
+  margin: 0 30px;
+  width: 1px;
+  height: 80px;
+  background-color: #3f4c59;
+}
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.game-area {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1;
+}
+.row-span {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.game-area .row-span span {
+  margin: 0 75px;
+  width: 3px;
+  height: 400px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  animation: row-in 0.5s;
+}
+.col-span {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(90deg);
+}
+.game-area .col-span span {
+  margin: 0 75px;
+  width: 3px;
+  height: 400px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  animation: col-in 0.5s;
+}
+.game-box {
+  width: 420px;
+  height: 420px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.game-box div {
+  position: relative;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+  transition: 0.2s;
+  /* background-color: #f29d38; */
 }
 
-@keyframes App-logo-spin {
+/* game winner */
+.game-winner {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.game-winner .icon {
+  margin: 10px 0;
+  font-size: var(--icons);
+  animation: come 0.7s;
+}
+.game-winner h1 {
+  font-size: var(--fontIcon);
+  font-family: "Poppins", sans-serif;
+  color: #f5f5f5;
+  animation: comeFont 0.7s;
+}
+
+/* game won lines */
+.game-won-line {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1;
+}
+.game-won-line.active {
+  z-index: 1;
+}
+.game-won-line .row-line {
+  position: absolute;
+  height: 422px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.game-won-line .row-line div.active {
+  height: 2px;
+  width: 400px;
+  background-color: #607d8b;
+  animation: row-line 0.7s;
+}
+.game-won-line .col-line {
+  position: absolute;
+  height: 100%;
+  width: 422px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.game-won-line .col-line div.active {
+  height: 400px;
+  width: 2px;
+  background-color: grey;
+  animation: col-line 0.7s;
+}
+.game-won-line .x-line {
+  position: absolute;
+  height: 530px;
+  width: 530px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.game-won-line .x-line .backward-line.active {
+  height: 530px;
+  width: 2px;
+  background-color: grey;
+  transform: rotate(-45deg);
+  animation: x-line 0.7s;
+}
+.game-won-line .x-line .forward-line.active {
+  height: 530px;
+  width: 2px;
+  background-color: grey;
+  transform: rotate(45deg);
+  animation: x-line 0.7s;
+}
+
+/* footer */
+.footer {
+  margin: 0 0 20px;
+}
+.footer span {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+}
+.footer span a {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  color: #f29d38;
+  text-decoration: none;
+}
+
+/* animations */
+
+@keyframes turn-In {
   from {
-    transform: rotate(0deg);
+    width: 0;
   }
   to {
-    transform: rotate(360deg);
+    width: 100%;
+  }
+}
+
+@keyframes row-in {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes col-in {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes come {
+  from {
+    font-size: 0;
+  }
+  to {
+    font-size: var(--icons);
+  }
+}
+@keyframes comeFont {
+  from {
+    font-size: 0;
+  }
+  to {
+    font-size: var(--fontIcon);
+  }
+}
+
+@keyframes row-line {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes col-line {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+@keyframes x-line {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+/* Responsive  --  360 */
+
+@media only screen and (max-width: 550px) {
+  .icon {
+    font-size: 33px;
+  }
+  .header {
+    height: 80px;
+  }
+  .section span {
+    font-size: 20px;
+  }
+  .section,
+  .section.active::after {
+    width: 150px;
+  }
+  .divider-line {
+    height: 80%;
+  }
+  .game-area .row-span,
+  .game-area .col-span {
+    width: 350px;
+    height: 350px;
+  }
+  .game-area .row-span span,
+  .game-area .col-span span {
+    margin: 0 65px;
+    width: 2px;
+    height: 350px;
+  }
+  .game-box {
+    width: 375px;
+    height: 375px;
+  }
+  .game-box div {
+    margin: 12px;
+  }
+
+  /* ------- game winner Icons ------- */
+  .game-winner .icon {
+    --icons: 45px;
+  }
+  .game-winner h1 {
+    --fontIcon: 30px;
+  }
+
+  /* ------- game-won-line ------- */
+  .game-won-line {
+    width: 367px;
+    height: 375px;
+  }
+  .game-won-line .row-line {
+    width: 330px;
+    height: 376px;
+  }
+  .game-won-line .col-line {
+    width: 366px;
+    height: 330px;
+  }
+  .game-won-line .x-line {
+    width: 430px;
+    height: 430px;
+  }
+  .game-won-line .row-line div.active {
+    width: 330px;
+  }
+  .game-won-line .col-line div.active {
+    height: 330px;
+  }
+  .game-won-line .x-line .backward-line.active,
+  .game-won-line .x-line .forward-line.active {
+    height: 430px;
+  }
+
+  /* ------- footer ------- */
+  .footer {
+    margin-bottom: 10px;
+  }
+  .footer span,
+  .footer span a {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .icon {
+    font-size: 30px;
+  }
+  .header {
+    padding: 0 30px;
+    height: 75px;
+  }
+  .section,
+  .section.active::after {
+    width: 128px;
+  }
+  .section span {
+    font-size: 20px;
+  }
+  .game-area .row-span,
+  .game-area .col-span {
+    width: 330px;
+    height: 330px;
+  }
+  .game-area .row-span span,
+  .game-area .col-span span {
+    margin: 0 60px;
+    height: 330px;
+  }
+  .game-box {
+    width: 330px;
+    height: 330px;
+  }
+  .game-box div {
+    margin: 5px;
+  }
+
+  /* ------- game winner Icons ------- */
+  .game-winner .icon {
+    --icons: 35px;
+  }
+  .game-winner h1 {
+    --fontIcon: 20px;
+  }
+
+  /* ------- game-won-line ------- */
+  .game-won-line {
+    width: 332px;
+    height: 331px;
+  }
+  .game-won-line .row-line {
+    width: 313px;
+    height: 332px;
+  }
+  .game-won-line .col-line {
+    width: 332px;
+    height: 313px;
+  }
+  .game-won-line .x-line {
+    width: 400px;
+    height: 400px;
+  }
+  .game-won-line .row-line div.active {
+    width: 313px;
+  }
+  .game-won-line .col-line div.active {
+    height: 313px;
+  }
+  .game-won-line .x-line .backward-line.active,
+  .game-won-line .x-line .forward-line.active {
+    height: 400px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .icon {
+    font-size: 30px;
+  }
+  .header {
+    padding: 0 30px;
+    height: 75px;
+  }
+  .section,
+  .section.active::after {
+    width: 128px;
+  }
+  .section span {
+    font-size: 20px;
+  }
+  .game-area .row-span,
+  .game-area .col-span {
+    width: 330px;
+    height: 330px;
+  }
+  .game-area .row-span span,
+  .game-area .col-span span {
+    margin: 0 60px;
+    height: 330px;
+  }
+  .game-box {
+    width: 330px;
+    height: 330px;
+  }
+  .game-box div {
+    margin: 5px;
+  }
+
+  /* ------- game winner Icons ------- */
+  .game-winner .icon {
+    --icons: 35px;
+  }
+  .game-winner h1 {
+    --fontIcon: 20px;
+  }
+
+  /* ------- game-won-line ------- */
+  .game-won-line {
+    width: 332px;
+    height: 331px;
+  }
+  .game-won-line .row-line {
+    width: 313px;
+    height: 332px;
+  }
+  .game-won-line .col-line {
+    width: 332px;
+    height: 313px;
+  }
+  .game-won-line .x-line {
+    width: 313px;
+  }
+  .game-won-line .row-line div.active {
+    width: 313px;
+  }
+  .game-won-line .col-line div.active {
+    height: 313px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .icon {
+    font-size: 26px;
+  }
+  .header {
+    padding: 0 33px;
+    height: 70px;
+  }
+  .section,
+  .section.active::after {
+    width: 97px;
+  }
+  .section span {
+    font-size: 18px;
+  }
+  .game-area .row-span,
+  .game-area .col-span {
+    width: 250px;
+    height: 250px;
+  }
+  .game-area .row-span span,
+  .game-area .col-span span {
+    margin: 0 46px;
+    height: 250px;
+  }
+  .game-box {
+    width: 250px;
+    height: 250px;
+  }
+  .game-box div {
+    margin: 11px;
+    width: 60px;
+    height: 60px;
+  }
+
+  /* ------- game-won-line ------- */
+  .game-won-line {
+    width: 230px;
+    height: 252px;
+  }
+  .game-won-line .row-line {
+    width: 230px;
+    height: 252px;
+  }
+  .game-won-line .col-line {
+    width: 252px;
+    height: 230px;
+  }
+  .game-won-line .x-line {
+    width: 230px;
+    height: 310px;
+  }
+  .game-won-line .row-line div.active {
+    width: 230px;
+  }
+  .game-won-line .col-line div.active {
+    height: 230px;
+  }
+  .game-won-line .x-line .backward-line.active,
+  .game-won-line .x-line .forward-line.active {
+    height: 310px;
   }
 }
