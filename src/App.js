@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./App.css";
 
@@ -16,6 +16,9 @@ const App = () => {
   const [oCount, setOCount] = useState(0);
   const [clickCount, setClickCount] = useState(1);
 
+  // loading
+  const [loading, setLoading] = useState(false);
+
   // game won line activation
   const [wonLine, setWonLine] = useState("");
 
@@ -24,8 +27,11 @@ const App = () => {
     if (winner === "") {
       if (itemList[index] === "empty") {
         itemList[index] = isCross ? "cross" : "circle";
-        setClickCount(clickCount + 1);
-        checkWinner();
+        setClickCount(clickCount + 2);
+
+        if (clickCount > 2) {
+          checkWinner();
+        }
 
         // check tie or not
 
@@ -37,6 +43,7 @@ const App = () => {
           }, 1000);
         } else {
           setIsCross(!isCross);
+          setLoading(!loading);
         }
       } else if (itemList[index] !== "empty") {
         alert("already filled!");
@@ -74,7 +81,7 @@ const App = () => {
         setTimeout(() => {
           setWinner(itemList[i]);
           setWonLine("");
-        }, 1000);
+        }, 500);
 
         itemList[i] === "circle"
           ? setOCount(oCount + 1)
@@ -107,18 +114,40 @@ const App = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("line: ", wonLine);
-  // }, [winner]);
+  // ------- AI for Game -------
+  const ai = () => {
+    const randomNumber = Math.floor(Math.random() * 9 + 1);
+    if (itemList[randomNumber] === "empty") {
+      itemList[randomNumber] = isCross ? "cross" : "circle";
+    } else {
+      ai();
+    }
+    checkWinner();
+  };
+
+  useEffect(() => {
+    if (clickCount > 1 && winner === "") {
+      setTimeout(() => {
+        ai();
+        setIsCross(!isCross);
+      }, 501);
+    }
+  }, [loading]);
   return (
     <div className="space-between">
       <div className="header flex">
-        <div className={`section ${isTie ? "" : isCross ? "" : "active"}`}>
+        <div
+          className={`section ${isTie ? "" : isCross ? "" : "active"}`}
+          onClick={() => clickCount === 1 && setIsCross(false)}
+        >
           <Icon name="circle" />
           {oCount > 0 ? <span>{oCount}</span> : <Icon name="dash" />}
         </div>
         <span className="divider-line"></span>
-        <div className={`section ${isTie ? "" : isCross ? "active" : ""}`}>
+        <div
+          className={`section ${isTie ? "" : isCross ? "active" : ""}`}
+          onClick={() => clickCount === 1 && setIsCross(true)}
+        >
           <Icon name="cross" />
           {xCount > 0 ? <span>{xCount}</span> : <Icon name="dash" />}
         </div>
