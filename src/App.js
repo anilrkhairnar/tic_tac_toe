@@ -81,11 +81,10 @@ const App = () => {
         setTimeout(() => {
           setWinner(itemList[i]);
           setWonLine("");
+          winner !== "empty" && itemList[i] === "circle"
+            ? setOCount(oCount + 1)
+            : setXCount(xCount + 1);
         }, 500);
-
-        itemList[i] === "circle"
-          ? setOCount(oCount + 1)
-          : setXCount(xCount + 1);
       }
     };
 
